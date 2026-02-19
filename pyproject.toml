@@ -1,0 +1,16 @@
+[project]
+name = "homeless"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.13"
+dependencies = [
+    "python-dotenv>=1.2.1",
+    "sqlalchemy>=2.0.46",
+    "pydantic>=2.12.5",
+    "uvicorn>=0.26.0",
+    "fastapi>=0.124.2",
+    "python-multipart>=0.0.6",
+    "fastapi-storage>=1.0.0",
+    "mysql-connector-python>=9.6.0",
+    "pymysql>=1.1.2",
+]

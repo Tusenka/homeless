@@ -1,0 +1,6 @@
+pydantic==2.12.5
+SQLAlchemy==2.0.45
+fastapi==0.124.2
+fastapi-storage==1.0.0
+dot-env
+mysql-connector-python

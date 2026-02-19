@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-skbd
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-sklad-kvbd}
+      MYSQL_CHARSET: ${MYSQL_CHARSET:-cp1251}
+      MYSQL_COLLATION: ${MYSQL_COLLATION:-cp1251_general_ci}
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      TZ: ${TZ:-Europe/Moscow}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/data/sklad-kvbd.sql:/docker-entrypoint-initdb.d/sklad-kvbd.sql:ro
+      - ./config/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    networks:
+      - mysql-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  mysql-network:
+    driver: bridge
